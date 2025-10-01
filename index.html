@@ -129,6 +129,7 @@
                                 <th scope="col" class="px-6 py-3">Tipas</th>
                                 <th scope="col" class="px-6 py-3">Išsiuntimo data</th>
                                 <th scope="col" class="px-6 py-3">Dienos po išsiuntimo</th>
+                                <th scope="col" class="px-6 py-3">Priminimas</th>
                             </tr>
                         </thead>
                         <tbody id="combined-table">
@@ -148,19 +149,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mock data - now we can include both signed and unsigned, the script will filter
     const allMockData = [
         // Unsigned
-        { id: 1, docType: 'sutartis', contractNo: 'SUT005979', contractDate: '2025-09-27', client: 'Tauras Sereika', manager: 'DKER', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-09-29', receivedDate: null },
-        { id: 2, docType: 'sutartis', contractNo: 'SUT005980', contractDate: '2025-09-12', client: 'Bronius Adomavičius', manager: 'AKRU', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-15', receivedDate: null },
-        { id: 10, docType: 'sutartis', contractNo: 'SUT006037', contractDate: '2025-08-09', client: 'Vidmantas Martinaitis', manager: 'IPLA', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-08-10', receivedDate: null },
-        { id: 11, docType: 'sutartis', contractNo: 'SUT006047', contractDate: '2025-09-22', client: 'Tomas Balsevičius', manager: 'DKER', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-24', receivedDate: null },
-        { id: 4, docType: 'priedas', contractNo: 'SUT005981', contractDate: '2025-09-22', annexNo: 'PR08246', annexDate: '2025-09-25', client: 'Ramunės Jankienės ūkis', manager: 'AKRU', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-25', receivedDate: null },
-        { id: 6, docType: 'priedas', contractNo: 'SUT006002', contractDate: '2025-09-18', annexNo: 'PR07271', annexDate: '2025-09-20', client: 'Edvinas Poškus, ūkis', manager: 'AJUO', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-20', receivedDate: null },
-        { id: 9, docType: 'priedas', contractNo: 'SUT006027', contractDate: '2025-09-25', annexNo: 'PR07343', annexDate: '2025-09-26', client: 'Bronius Adomavičius', manager: 'MKAZ', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-26', receivedDate: null },
-        { id: 13, docType: 'priedas', contractNo: 'SUT006101', contractDate: '2025-09-28', annexNo: 'PR07985', annexDate: '2025-09-28', client: 'UAB "Agro"', manager: 'IPLA', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-09-28', receivedDate: null },
+        { id: 1, docType: 'sutartis', contractNo: 'SUT005979', contractDate: '2025-09-27', client: 'Tauras Sereika', manager: 'DKER', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-09-29', receivedDate: null, reminderSent: false },
+        { id: 2, docType: 'sutartis', contractNo: 'SUT005980', contractDate: '2025-09-12', client: 'Bronius Adomavičius', manager: 'AKRU', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-15', receivedDate: null, reminderSent: true },
+        { id: 10, docType: 'sutartis', contractNo: 'SUT006037', contractDate: '2025-08-09', client: 'Vidmantas Martinaitis', manager: 'IPLA', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-08-10', receivedDate: null, reminderSent: true },
+        { id: 11, docType: 'sutartis', contractNo: 'SUT006047', contractDate: '2025-09-22', client: 'Tomas Balsevičius', manager: 'DKER', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-24', receivedDate: null, reminderSent: false },
+        { id: 4, docType: 'priedas', contractNo: 'SUT005981', contractDate: '2025-09-22', annexNo: 'PR08246', annexDate: '2025-09-25', client: 'Ramunės Jankienės ūkis', manager: 'AKRU', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-25', receivedDate: null, reminderSent: false },
+        { id: 6, docType: 'priedas', contractNo: 'SUT006002', contractDate: '2025-09-18', annexNo: 'PR07271', annexDate: '2025-09-20', client: 'Edvinas Poškus, ūkis', manager: 'AJUO', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-20', receivedDate: null, reminderSent: true },
+        { id: 9, docType: 'priedas', contractNo: 'SUT006027', contractDate: '2025-09-25', annexNo: 'PR07343', annexDate: '2025-09-26', client: 'Bronius Adomavičius', manager: 'MKAZ', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-26', receivedDate: null, reminderSent: false },
+        { id: 13, docType: 'priedas', contractNo: 'SUT006101', contractDate: '2025-09-28', annexNo: 'PR07985', annexDate: '2025-09-28', client: 'UAB "Agro"', manager: 'IPLA', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-09-28', receivedDate: null, reminderSent: false },
         // Signed (will be filtered out)
-        { id: 5, docType: 'sutartis', contractNo: 'SUT006001', contractDate: '2025-09-28', client: 'Andrius Poškienė', manager: 'AJUO', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-28', receivedDate: '2025-09-30' },
-        { id: 8, docType: 'sutartis', contractNo: 'SUT006026', contractDate: '2025-09-29', client: 'Jonas Kurtinaitis', manager: 'MKAZ', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-29', receivedDate: '2025-10-01' },
-        { id: 3, docType: 'priedas', contractNo: 'SUT005981', contractDate: '2025-09-22', annexNo: 'PR08245', annexDate: '2025-09-25', client: 'Ramunės Jankienės ūkis', manager: 'AKRU', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-25', receivedDate: '2025-09-28' },
-        { id: 7, docType: 'priedas', contractNo: 'SUT006010', contractDate: '2025-08-30', annexNo: 'PR07368', annexDate: '2025-09-01', client: 'Artūras Zobov', manager: 'DKER', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-01', receivedDate: '2025-09-05' },
+        { id: 5, docType: 'sutartis', contractNo: 'SUT006001', contractDate: '2025-09-28', client: 'Andrius Poškienė', manager: 'AJUO', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-28', receivedDate: '2025-09-30', reminderSent: false },
+        { id: 8, docType: 'sutartis', contractNo: 'SUT006026', contractDate: '2025-09-29', client: 'Jonas Kurtinaitis', manager: 'MKAZ', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-29', receivedDate: '2025-10-01', reminderSent: false },
+        { id: 3, docType: 'priedas', contractNo: 'SUT005981', contractDate: '2025-09-22', annexNo: 'PR08245', annexDate: '2025-09-25', client: 'Ramunės Jankienės ūkis', manager: 'AKRU', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-25', receivedDate: '2025-09-28', reminderSent: false },
+        { id: 7, docType: 'priedas', contractNo: 'SUT006010', contractDate: '2025-08-30', annexNo: 'PR07368', annexDate: '2025-09-01', client: 'Artūras Zobov', manager: 'DKER', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-01', receivedDate: '2025-09-05', reminderSent: false },
     ];
     
     // The main dataset for this report is only the unsigned documents
@@ -211,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.innerHTML = ''; 
 
         if (data.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="10" class="text-center py-10 text-gray-500">Pagal nurodytus filtrus duomenų nerasta.</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="11" class="text-center py-10 text-gray-500">Pagal nurodytus filtrus duomenų nerasta.</td></tr>`;
             return;
         }
 
@@ -220,6 +221,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const isOverdue = daysSinceSent > 5;
             
             const docTypeDisplay = item.docType.charAt(0).toUpperCase() + item.docType.slice(1);
+            
+            const reminderStatus = item.reminderSent
+            ? '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-sky-100 text-sky-800">Išsiųstas</span>'
+            : '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">Neišsiųstas</span>';
 
             const row = `
                 <tr class="bg-white border-b ${isOverdue ? 'bg-red-50' : ''}">
@@ -233,6 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td class="px-6 py-4 capitalize">${item.type}</td>
                     <td class="px-6 py-4">${item.sentDate}</td>
                     <td class="px-6 py-4 font-semibold ${isOverdue ? 'text-red-600' : ''}">${daysSinceSent || 'N/A'}</td>
+                    <td class="px-6 py-4">${reminderStatus}</td>
                 </tr>
             `;
             tableBody.innerHTML += row;
@@ -279,7 +285,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'Priedo data': item.annexDate || '',
             'Tipas': item.type,
             'Išsiuntimo data': item.sentDate,
-            'Dienos po išsiuntimo': getDaysSince(item.sentDate) || 0
+            'Dienos po išsiuntimo': getDaysSince(item.sentDate) || 0,
+            'Priminimas': item.reminderSent ? 'Išsiųstas' : 'Neišsiųstas'
         }));
 
         const worksheet = XLSX.utils.json_to_sheet(dataToExport);

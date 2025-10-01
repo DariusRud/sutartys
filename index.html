@@ -123,21 +123,21 @@
                 <!-- Combined Table -->
                 <div class="bg-white rounded-xl shadow-md">
                     <div class="overflow-auto" style="max-height: calc(100vh - 450px);">
-                        <table class="w-full text-sm text-left text-gray-500">
+                        <table class="w-full text-xs text-left text-gray-500">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr id="table-header">
-                                    <th scope="col" class="px-6 py-3 sticky top-0 bg-gray-50 z-10">Dokumento Tipas</th>
-                                    <th scope="col" class="px-6 py-3 sticky top-0 bg-gray-50 z-10">Sutarties Nr.</th>
-                                    <th scope="col" class="px-6 py-3 sticky top-0 bg-gray-50 z-10">Priedo Nr.</th>
-                                    <th scope="col" class="px-6 py-3 sticky top-0 bg-gray-50 z-10">Klientas</th>
-                                    <th scope="col" class="px-6 py-3 sticky top-0 bg-gray-50 z-10">Menedžeris</th>
-                                    <th scope="col" class="px-6 py-3 sticky top-0 bg-gray-50 z-10">Sutarties data</th>
-                                    <th scope="col" class="px-6 py-3 sticky top-0 bg-gray-50 z-10">Priedo data</th>
-                                    <th scope="col" class="px-6 py-3 sticky top-0 bg-gray-50 z-10">Tipas</th>
-                                    <th scope="col" class="px-6 py-3 sticky top-0 bg-gray-50 z-10">Išsiuntimo data</th>
-                                    <th scope="col" class="px-6 py-3 sticky top-0 bg-gray-50 z-10">Dienos po išsiuntimo</th>
-                                    <th scope="col" class="px-6 py-3 sticky top-0 bg-gray-50 z-10">Priminimas</th>
-                                    <th scope="col" class="px-6 py-3 sticky top-0 bg-gray-50 z-10 text-center">Veiksmai</th>
+                                    <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10">Dok. Tipas</th>
+                                    <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10">Sutarties Nr.</th>
+                                    <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10">Priedo Nr.</th>
+                                    <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10">Klientas</th>
+                                    <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10">Menedžeris</th>
+                                    <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10">Sutarties data</th>
+                                    <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10">Priedo data</th>
+                                    <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10">Tipas</th>
+                                    <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10">Išsiuntimo data</th>
+                                    <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10">Dienos po išs.</th>
+                                    <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10">Priminimas</th>
+                                    <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10 text-center">Veiksmai</th>
                                 </tr>
                             </thead>
                             <tbody id="combined-table">
@@ -279,18 +279,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const row = `
                 <tr class="bg-white border-b ${isOverdue ? 'bg-red-50' : ''}">
-                    <td class="px-6 py-4 font-semibold">${docTypeDisplay}</td>
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">${item.contractNo}</th>
-                    <td class="px-6 py-4">${item.annexNo || '---'}</td>
-                    <td class="px-6 py-4">${item.client}</td>
-                    <td class="px-6 py-4">${item.manager || '---'}</td>
-                    <td class="px-6 py-4">${item.contractDate || '---'}</td>
-                    <td class="px-6 py-4">${item.annexDate || '---'}</td>
-                    <td class="px-6 py-4 capitalize">${item.type}</td>
-                    <td class="px-6 py-4">${item.sentDate}</td>
-                    <td class="px-6 py-4 font-semibold ${isOverdue ? 'text-red-600' : ''}">${daysSinceSent || 'N/A'}</td>
-                    <td class="px-6 py-4">${reminderStatus}</td>
-                    <td class="px-6 py-4 text-center">${actionButton}</td>
+                    <td class="px-2 py-4 font-semibold">${docTypeDisplay}</td>
+                    <th scope="row" class="px-2 py-4 font-medium text-gray-900 whitespace-nowrap">${item.contractNo}</th>
+                    <td class="px-2 py-4">${item.annexNo || '---'}</td>
+                    <td class="px-2 py-4">${item.client}</td>
+                    <td class="px-2 py-4">${item.manager || '---'}</td>
+                    <td class="px-2 py-4">${item.contractDate || '---'}</td>
+                    <td class="px-2 py-4">${item.annexDate || '---'}</td>
+                    <td class="px-2 py-4 capitalize">${item.type}</td>
+                    <td class="px-2 py-4">${item.sentDate}</td>
+                    <td class="px-2 py-4 font-semibold ${isOverdue ? 'text-red-600' : ''}">${daysSinceSent || 'N/A'}</td>
+                    <td class="px-2 py-4">${reminderStatus}</td>
+                    <td class="px-2 py-4 text-center">${actionButton}</td>
                 </tr>
             `;
             tableBody.innerHTML += row;

@@ -26,6 +26,9 @@
             background-color: #334155 !important; /* bg-slate-700 */
             color: white !important;
         }
+        #reminder-modal {
+            transition: opacity 0.3s ease;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -130,6 +133,7 @@
                                 <th scope="col" class="px-6 py-3">Išsiuntimo data</th>
                                 <th scope="col" class="px-6 py-3">Dienos po išsiuntimo</th>
                                 <th scope="col" class="px-6 py-3">Priminimas</th>
+                                <th scope="col" class="px-6 py-3 text-center">Veiksmai</th>
                             </tr>
                         </thead>
                         <tbody id="combined-table">
@@ -141,30 +145,67 @@
 
         </main>
     </div>
+    
+    <!-- Reminder Modal -->
+    <div id="reminder-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-2xl transform transition-all">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Priminimo siuntimas</h2>
+                <button id="close-modal-btn" class="text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
+            </div>
+            <div class="space-y-4">
+                 <div>
+                    <label class="block text-sm font-medium text-gray-700">Gavėjas</label>
+                    <p id="modal-recipient" class="mt-1 text-lg font-semibold text-gray-900"></p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="modal-email" class="block text-sm font-medium text-gray-700">El. paštas</label>
+                        <input type="email" id="modal-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="pvz., vardas@imone.lt">
+                    </div>
+                    <div>
+                        <label for="modal-cc" class="block text-sm font-medium text-gray-700">CC</label>
+                        <input type="email" id="modal-cc" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="pvz., kopija@imone.lt">
+                    </div>
+                </div>
+                <div>
+                    <label for="modal-subject" class="block text-sm font-medium text-gray-700">Tema</label>
+                    <input type="text" id="modal-subject" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                </div>
+                <div>
+                    <label for="modal-body" class="block text-sm font-medium text-gray-700">Laiško tekstas</p>
+                    <textarea id="modal-body" rows="8" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
+                </div>
+            </div>
+            <div class="mt-8 flex justify-end gap-4">
+                <button id="cancel-modal-btn" class="bg-gray-200 text-gray-700 py-2 px-6 rounded-md hover:bg-gray-300 transition-colors">Atšaukti</button>
+                <button id="send-reminder-btn" class="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition-colors">Siųsti</button>
+            </div>
+        </div>
+    </div>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const today = new Date();
 
-    // Mock data - now we can include both signed and unsigned, the script will filter
     const allMockData = [
         // Unsigned
-        { id: 1, docType: 'sutartis', contractNo: 'SUT005979', contractDate: '2025-09-27', client: 'Tauras Sereika', manager: 'DKER', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-09-29', receivedDate: null, reminderSent: false },
-        { id: 2, docType: 'sutartis', contractNo: 'SUT005980', contractDate: '2025-09-12', client: 'Bronius Adomavičius', manager: 'AKRU', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-15', receivedDate: null, reminderSent: true },
-        { id: 10, docType: 'sutartis', contractNo: 'SUT006037', contractDate: '2025-08-09', client: 'Vidmantas Martinaitis', manager: 'IPLA', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-08-10', receivedDate: null, reminderSent: true },
-        { id: 11, docType: 'sutartis', contractNo: 'SUT006047', contractDate: '2025-09-22', client: 'Tomas Balsevičius', manager: 'DKER', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-24', receivedDate: null, reminderSent: false },
-        { id: 4, docType: 'priedas', contractNo: 'SUT005981', contractDate: '2025-09-22', annexNo: 'PR08246', annexDate: '2025-09-25', client: 'Ramunės Jankienės ūkis', manager: 'AKRU', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-25', receivedDate: null, reminderSent: false },
-        { id: 6, docType: 'priedas', contractNo: 'SUT006002', contractDate: '2025-09-18', annexNo: 'PR07271', annexDate: '2025-09-20', client: 'Edvinas Poškus, ūkis', manager: 'AJUO', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-20', receivedDate: null, reminderSent: true },
-        { id: 9, docType: 'priedas', contractNo: 'SUT006027', contractDate: '2025-09-25', annexNo: 'PR07343', annexDate: '2025-09-26', client: 'Bronius Adomavičius', manager: 'MKAZ', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-26', receivedDate: null, reminderSent: false },
-        { id: 13, docType: 'priedas', contractNo: 'SUT006101', contractDate: '2025-09-28', annexNo: 'PR07985', annexDate: '2025-09-28', client: 'UAB "Agro"', manager: 'IPLA', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-09-28', receivedDate: null, reminderSent: false },
+        { id: 1, docType: 'sutartis', contractNo: 'SUT005979', contractDate: '2025-09-27', client: 'Tauras Sereika', email: 'tauras.s@email.com', manager: 'DKER', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-09-29', receivedDate: null, reminderSent: false },
+        { id: 2, docType: 'sutartis', contractNo: 'SUT005980', contractDate: '2025-09-12', client: 'Bronius Adomavičius', email: 'bronius.a@email.com', manager: 'AKRU', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-15', receivedDate: null, reminderSent: true },
+        { id: 10, docType: 'sutartis', contractNo: 'SUT006037', contractDate: '2025-08-09', client: 'Vidmantas Martinaitis', email: 'vidmantas.m@email.com', manager: 'IPLA', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-08-10', receivedDate: null, reminderSent: true },
+        { id: 11, docType: 'sutartis', contractNo: 'SUT006047', contractDate: '2025-09-22', client: 'Tomas Balsevičius', email: 'tomas.b@email.com', manager: 'DKER', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-24', receivedDate: null, reminderSent: false },
+        { id: 4, docType: 'priedas', contractNo: 'SUT005981', contractDate: '2025-09-22', annexNo: 'PR08246', annexDate: '2025-09-25', client: 'Ramunės Jankienės ūkis', email: 'ramune.j@email.com', manager: 'AKRU', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-25', receivedDate: null, reminderSent: false },
+        { id: 6, docType: 'priedas', contractNo: 'SUT006002', contractDate: '2025-09-18', annexNo: 'PR07271', annexDate: '2025-09-20', client: 'Edvinas Poškus, ūkis', email: 'edvinas.p@email.com', manager: 'AJUO', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-20', receivedDate: null, reminderSent: true },
+        { id: 9, docType: 'priedas', contractNo: 'SUT006027', contractDate: '2025-09-25', annexNo: 'PR07343', annexDate: '2025-09-26', client: 'Bronius Adomavičius', email: 'bronius.a@email.com', manager: 'MKAZ', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-26', receivedDate: null, reminderSent: false },
+        { id: 13, docType: 'priedas', contractNo: 'SUT006101', contractDate: '2025-09-28', annexNo: 'PR07985', annexDate: '2025-09-28', client: 'UAB "Agro"', email: 'info@agro.lt', manager: 'IPLA', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-09-28', receivedDate: null, reminderSent: false },
         // Signed (will be filtered out)
-        { id: 5, docType: 'sutartis', contractNo: 'SUT006001', contractDate: '2025-09-28', client: 'Andrius Poškienė', manager: 'AJUO', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-28', receivedDate: '2025-09-30', reminderSent: false },
-        { id: 8, docType: 'sutartis', contractNo: 'SUT006026', contractDate: '2025-09-29', client: 'Jonas Kurtinaitis', manager: 'MKAZ', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-29', receivedDate: '2025-10-01', reminderSent: false },
-        { id: 3, docType: 'priedas', contractNo: 'SUT005981', contractDate: '2025-09-22', annexNo: 'PR08245', annexDate: '2025-09-25', client: 'Ramunės Jankienės ūkis', manager: 'AKRU', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-25', receivedDate: '2025-09-28', reminderSent: false },
-        { id: 7, docType: 'priedas', contractNo: 'SUT006010', contractDate: '2025-08-30', annexNo: 'PR07368', annexDate: '2025-09-01', client: 'Artūras Zobov', manager: 'DKER', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-01', receivedDate: '2025-09-05', reminderSent: false },
+        { id: 5, docType: 'sutartis', contractNo: 'SUT006001', contractDate: '2025-09-28', client: 'Andrius Poškienė', email: 'andrius.p@email.com', manager: 'AJUO', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-28', receivedDate: '2025-09-30', reminderSent: false },
+        { id: 8, docType: 'sutartis', contractNo: 'SUT006026', contractDate: '2025-09-29', client: 'Jonas Kurtinaitis', email: 'jonas.k@email.com', manager: 'MKAZ', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-29', receivedDate: '2025-10-01', reminderSent: false },
+        { id: 3, docType: 'priedas', contractNo: 'SUT005981', contractDate: '2025-09-22', annexNo: 'PR08245', annexDate: '2025-09-25', client: 'Ramunės Jankienės ūkis', email: 'ramune.j@email.com', manager: 'AKRU', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-25', receivedDate: '2025-09-28', reminderSent: false },
+        { id: 7, docType: 'priedas', contractNo: 'SUT006010', contractDate: '2025-08-30', annexNo: 'PR07368', annexDate: '2025-09-01', client: 'Artūras Zobov', email: 'arturas.z@email.com', manager: 'DKER', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-01', receivedDate: '2025-09-05', reminderSent: false },
     ];
     
-    // The main dataset for this report is only the unsigned documents
     const unsignedData = allMockData.filter(d => d.status === 'nepasirašyta');
 
     const managerFilter = document.getElementById('manager-filter');
@@ -172,11 +213,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetBtn = document.getElementById('reset-filters');
     const docTypeFilters = document.getElementById('doc-type-filters');
     const exportBtn = document.getElementById('export-btn');
+    const tableBody = document.getElementById('combined-table');
+
+    const modal = document.getElementById('reminder-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const cancelModalBtn = document.getElementById('cancel-modal-btn');
+    const sendReminderBtn = document.getElementById('send-reminder-btn');
     
     let activeDocTypeFilter = 'visi';
     let currentFilteredData = [];
+    let currentItemId = null;
 
-    // Populate manager filter dynamically
     const managers = [...new Set(unsignedData.map(item => item.manager).filter(Boolean))].sort();
     managers.forEach(manager => {
         const option = document.createElement('option');
@@ -193,8 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function renderDashboard(data) {
-        currentFilteredData = data; // Store current data for export
-        // --- Render stats (always calculated on the full unsigned dataset) ---
+        currentFilteredData = data;
         const unsignedContracts = unsignedData.filter(d => d.docType === 'sutartis').length;
         const unsignedAnnexes = unsignedData.filter(d => d.docType === 'priedas').length;
         const overdueDocs = unsignedData.filter(d => getDaysSince(d.sentDate) > 5).length;
@@ -202,29 +248,31 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('unsigned-contracts').textContent = unsignedContracts;
         document.getElementById('unsigned-annexes').textContent = unsignedAnnexes;
         document.getElementById('overdue-docs').textContent = overdueDocs;
-
-        // --- Render table with filtered data ---
         renderTable('combined-table', data);
     }
 
     function renderTable(tableId, data) {
-        const tableBody = document.getElementById(tableId);
         tableBody.innerHTML = ''; 
 
         if (data.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="11" class="text-center py-10 text-gray-500">Pagal nurodytus filtrus duomenų nerasta.</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="12" class="text-center py-10 text-gray-500">Pagal nurodytus filtrus duomenų nerasta.</td></tr>`;
             return;
         }
 
         data.forEach(item => {
             const daysSinceSent = getDaysSince(item.sentDate);
             const isOverdue = daysSinceSent > 5;
-            
             const docTypeDisplay = item.docType.charAt(0).toUpperCase() + item.docType.slice(1);
-            
             const reminderStatus = item.reminderSent
             ? '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-sky-100 text-sky-800">Išsiųstas</span>'
             : '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">Neišsiųstas</span>';
+            
+            let actionButton = '';
+            if (!item.reminderSent) {
+                actionButton = `<button data-id="${item.id}" class="open-reminder-modal-btn text-blue-600 hover:text-blue-900 font-semibold">Siųsti priminimą</button>`;
+            } else {
+                actionButton = `<button data-id="${item.id}" class="open-reminder-modal-btn text-gray-500 hover:text-gray-800 font-semibold">Siųsti pakartotinai</button>`;
+            }
 
             const row = `
                 <tr class="bg-white border-b ${isOverdue ? 'bg-red-50' : ''}">
@@ -239,6 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td class="px-6 py-4">${item.sentDate}</td>
                     <td class="px-6 py-4 font-semibold ${isOverdue ? 'text-red-600' : ''}">${daysSinceSent || 'N/A'}</td>
                     <td class="px-6 py-4">${reminderStatus}</td>
+                    <td class="px-6 py-4 text-center">${actionButton}</td>
                 </tr>
             `;
             tableBody.innerHTML += row;
@@ -247,24 +296,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function applyFilters() {
         let filteredData = unsignedData;
-
-        // 1. Document Type button filter
         if (activeDocTypeFilter !== 'visi') {
             filteredData = filteredData.filter(d => d.docType === activeDocTypeFilter);
         }
-        
-        // 2. Manager filter
         const selectedManager = managerFilter.value;
         if (selectedManager !== 'visi') {
             filteredData = filteredData.filter(d => d.manager === selectedManager);
         }
-
-        // 3. Sutarties Tipas filter
         const selectedType = typeFilter.value;
         if (selectedType !== 'visi') {
             filteredData = filteredData.filter(d => d.type === selectedType);
         }
-        
         renderDashboard(filteredData);
     }
     
@@ -273,8 +315,6 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Nėra duomenų eksportavimui.");
             return;
         }
-
-        // Map data to match headers and desired format
         const dataToExport = currentFilteredData.map(item => ({
             'Dokumento Tipas': item.docType.charAt(0).toUpperCase() + item.docType.slice(1),
             'Sutarties Nr.': item.contractNo,
@@ -288,34 +328,46 @@ document.addEventListener('DOMContentLoaded', () => {
             'Dienos po išsiuntimo': getDaysSince(item.sentDate) || 0,
             'Priminimas': item.reminderSent ? 'Išsiųstas' : 'Neišsiųstas'
         }));
-
         const worksheet = XLSX.utils.json_to_sheet(dataToExport);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, "Nepasirašyti");
-
-        // Generate filename with date
         const todayStr = new Date().toISOString().slice(0, 10);
         XLSX.writeFile(workbook, `nepasirasyti_dokumentai_${todayStr}.xlsx`);
     }
 
-    // Event listeners for filters
+    function openModal(itemId) {
+        currentItemId = itemId;
+        const item = unsignedData.find(d => d.id === itemId);
+        if (!item) return;
+        const docName = item.docType === 'sutartis' ? `sutartį Nr. ${item.contractNo}` : `priedą Nr. ${item.annexNo} prie sutarties Nr. ${item.contractNo}`;
+        const isResend = item.reminderSent;
+        
+        document.getElementById('modal-recipient').textContent = item.client;
+        document.getElementById('modal-email').value = item.email || '';
+        document.getElementById('modal-cc').value = '';
+        document.getElementById('modal-subject').value = `${isResend ? 'Pakartotinis p' : 'P'}riminimas dėl nepasirašyto dokumento`;
+        document.getElementById('modal-body').value = `Laba diena,\n\n${isResend ? 'Norėtume dar kartą priminti' : 'Norėtume priminti'} dėl nepasirašytos ${item.type} ${docName}, išsiųstos ${item.sentDate}.\n\nPrašome pasirašyti ir atsiųsti mums kaip įmanoma greičiau.\n\nPagarbiai,\nBaltijos Javai`;
+        
+        modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+        modal.classList.add('hidden');
+        currentItemId = null;
+    }
+
+    // Event listeners
     managerFilter.addEventListener('change', applyFilters);
     typeFilter.addEventListener('change', applyFilters);
     
-    // Event listener for doc type buttons
     docTypeFilters.addEventListener('click', (e) => {
         const button = e.target.closest('button');
         if (!button) return;
-
         const filterValue = button.dataset.filter;
         if (filterValue) {
             activeDocTypeFilter = filterValue;
-
-            docTypeFilters.querySelectorAll('button').forEach(btn => {
-                btn.classList.remove('filter-btn-active');
-            });
+            docTypeFilters.querySelectorAll('button').forEach(btn => btn.classList.remove('filter-btn-active'));
             button.classList.add('filter-btn-active');
-            
             applyFilters();
         }
     });
@@ -323,15 +375,49 @@ document.addEventListener('DOMContentLoaded', () => {
     resetBtn.addEventListener('click', () => {
         managerFilter.value = 'visi';
         typeFilter.value = 'visi';
-        
         activeDocTypeFilter = 'visi';
         docTypeFilters.querySelectorAll('button').forEach(btn => btn.classList.remove('filter-btn-active'));
         docTypeFilters.querySelector('button[data-filter="visi"]').classList.add('filter-btn-active');
-
         applyFilters();
     });
 
     exportBtn.addEventListener('click', exportToExcel);
+
+    tableBody.addEventListener('click', (e) => {
+        const button = e.target.closest('.open-reminder-modal-btn');
+        if (button) {
+            openModal(parseInt(button.dataset.id));
+        }
+    });
+
+    closeModalBtn.addEventListener('click', closeModal);
+    cancelModalBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if(e.target === modal) closeModal();
+    });
+
+    sendReminderBtn.addEventListener('click', () => {
+        if(currentItemId) {
+            const email = document.getElementById('modal-email').value;
+            const cc = document.getElementById('modal-cc').value;
+            // Basic email validation
+            if (!email || !email.includes('@')) {
+                alert('Prašome įvesti teisingą el. pašto adresą.');
+                return;
+            }
+
+            const itemInAllData = allMockData.find(d => d.id === currentItemId);
+            const itemInUnsignedData = unsignedData.find(d => d.id === currentItemId);
+            if (itemInAllData) itemInAllData.reminderSent = true;
+            if (itemInUnsignedData) itemInUnsignedData.reminderSent = true;
+            
+            console.log('Sending reminder for item ID:', currentItemId, 'to:', email, 'CC:', cc);
+            alert('Priminimas išsiųstas!');
+            
+            closeModal();
+            applyFilters();
+        }
+    });
 
     // Initial render
     applyFilters();

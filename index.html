@@ -82,6 +82,12 @@
                 </div>
                 <div class="flex flex-col md:flex-row justify-center items-center gap-4">
                     <div class="w-full md:w-1/3">
+                        <label for="manager-filter" class="block text-sm font-medium text-gray-700">Menedžeris</label>
+                        <select id="manager-filter" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <option value="visi">Visi menedžeriai</option>
+                        </select>
+                    </div>
+                    <div class="w-full md:w-1/3">
                         <label for="type-filter" class="block text-sm font-medium text-gray-700">Sutarties tipas</label>
                         <select id="type-filter" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                             <option value="visi">Visi tipai</option>
@@ -151,11 +157,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // The main dataset for this report is only the unsigned documents
     const unsignedData = allMockData.filter(d => d.status === 'nepasirašyta');
 
+    const managerFilter = document.getElementById('manager-filter');
     const typeFilter = document.getElementById('type-filter');
     const resetBtn = document.getElementById('reset-filters');
     const docTypeFilters = document.getElementById('doc-type-filters');
     
     let activeDocTypeFilter = 'visi';
+
+    // Populate manager filter dynamically
+    const managers = [...new Set(unsignedData.map(item => item.manager).filter(Boolean))].sort();
+    managers.forEach(manager => {
+        const option = document.createElement('option');
+        option.value = manager;
+        option.textContent = manager;
+        managerFilter.appendChild(option);
+    });
 
     function getDaysSince(dateString) {
         if (!dateString) return null;
@@ -218,8 +234,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activeDocTypeFilter !== 'visi') {
             filteredData = filteredData.filter(d => d.docType === activeDocTypeFilter);
         }
+        
+        // 2. Manager filter
+        const selectedManager = managerFilter.value;
+        if (selectedManager !== 'visi') {
+            filteredData = filteredData.filter(d => d.manager === selectedManager);
+        }
 
-        // 2. Sutarties Tipas filter
+        // 3. Sutarties Tipas filter
         const selectedType = typeFilter.value;
         if (selectedType !== 'visi') {
             filteredData = filteredData.filter(d => d.type === selectedType);
@@ -229,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Event listeners for filters
+    managerFilter.addEventListener('change', applyFilters);
     typeFilter.addEventListener('change', applyFilters);
     
     // Event listener for doc type buttons
@@ -250,6 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     resetBtn.addEventListener('click', () => {
+        managerFilter.value = 'visi';
         typeFilter.value = 'visi';
         
         activeDocTypeFilter = 'visi';

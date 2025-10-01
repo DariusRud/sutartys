@@ -137,6 +137,7 @@
                                     <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10">Išsiuntimo data</th>
                                     <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10">Dienos po išs.</th>
                                     <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10">Priminimas</th>
+                                    <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10">Priminimo data</th>
                                     <th scope="col" class="px-2 py-3 sticky top-0 bg-gray-50 z-10 text-center">Veiksmai</th>
                                 </tr>
                             </thead>
@@ -195,19 +196,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const allMockData = [
         // Unsigned
-        { id: 1, docType: 'sutartis', contractNo: 'SUT005979', contractDate: '2025-09-27', client: 'Tauras Sereika', email: 'tauras.s@email.com', manager: 'DKER', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-09-29', receivedDate: null, reminderSent: false },
-        { id: 2, docType: 'sutartis', contractNo: 'SUT005980', contractDate: '2025-09-12', client: 'Bronius Adomavičius', email: 'bronius.a@email.com', manager: 'AKRU', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-15', receivedDate: null, reminderSent: true },
-        { id: 10, docType: 'sutartis', contractNo: 'SUT006037', contractDate: '2025-08-09', client: 'Vidmantas Martinaitis', email: 'vidmantas.m@email.com', manager: 'IPLA', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-08-10', receivedDate: null, reminderSent: true },
-        { id: 11, docType: 'sutartis', contractNo: 'SUT006047', contractDate: '2025-09-22', client: 'Tomas Balsevičius', email: 'tomas.b@email.com', manager: 'DKER', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-24', receivedDate: null, reminderSent: false },
-        { id: 4, docType: 'priedas', contractNo: 'SUT005981', contractDate: '2025-09-22', annexNo: 'PR08246', annexDate: '2025-09-25', client: 'Ramunės Jankienės ūkis', email: 'ramune.j@email.com', manager: 'AKRU', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-25', receivedDate: null, reminderSent: false },
-        { id: 6, docType: 'priedas', contractNo: 'SUT006002', contractDate: '2025-09-18', annexNo: 'PR07271', annexDate: '2025-09-20', client: 'Edvinas Poškus, ūkis', email: 'edvinas.p@email.com', manager: 'AJUO', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-20', receivedDate: null, reminderSent: true },
-        { id: 9, docType: 'priedas', contractNo: 'SUT006027', contractDate: '2025-09-25', annexNo: 'PR07343', annexDate: '2025-09-26', client: 'Bronius Adomavičius', email: 'bronius.a@email.com', manager: 'MKAZ', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-26', receivedDate: null, reminderSent: false },
-        { id: 13, docType: 'priedas', contractNo: 'SUT006101', contractDate: '2025-09-28', annexNo: 'PR07985', annexDate: '2025-09-28', client: 'UAB "Agro"', email: 'info@agro.lt', manager: 'IPLA', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-09-28', receivedDate: null, reminderSent: false },
+        { id: 1, docType: 'sutartis', contractNo: 'SUT005979', contractDate: '2025-09-27', client: 'Tauras Sereika', email: 'tauras.s@email.com', manager: 'DKER', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-09-29', receivedDate: null, reminderSent: false, reminderSentDate: null },
+        { id: 2, docType: 'sutartis', contractNo: 'SUT005980', contractDate: '2025-09-12', client: 'Bronius Adomavičius', email: 'bronius.a@email.com', manager: 'AKRU', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-15', receivedDate: null, reminderSent: true, reminderSentDate: '2025-09-20' },
+        { id: 10, docType: 'sutartis', contractNo: 'SUT006037', contractDate: '2025-08-09', client: 'Vidmantas Martinaitis', email: 'vidmantas.m@email.com', manager: 'IPLA', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-08-10', receivedDate: null, reminderSent: true, reminderSentDate: '2025-08-18' },
+        { id: 11, docType: 'sutartis', contractNo: 'SUT006047', contractDate: '2025-09-22', client: 'Tomas Balsevičius', email: 'tomas.b@email.com', manager: 'DKER', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-24', receivedDate: null, reminderSent: false, reminderSentDate: null },
+        { id: 4, docType: 'priedas', contractNo: 'SUT005981', contractDate: '2025-09-22', annexNo: 'PR08246', annexDate: '2025-09-25', client: 'Ramunės Jankienės ūkis', email: 'ramune.j@email.com', manager: 'AKRU', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-25', receivedDate: null, reminderSent: false, reminderSentDate: null },
+        { id: 6, docType: 'priedas', contractNo: 'SUT006002', contractDate: '2025-09-18', annexNo: 'PR07271', annexDate: '2025-09-20', client: 'Edvinas Poškus, ūkis', email: 'edvinas.p@email.com', manager: 'AJUO', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-20', receivedDate: null, reminderSent: true, reminderSentDate: '2025-09-26' },
+        { id: 9, docType: 'priedas', contractNo: 'SUT006027', contractDate: '2025-09-25', annexNo: 'PR07343', annexDate: '2025-09-26', client: 'Bronius Adomavičius', email: 'bronius.a@email.com', manager: 'MKAZ', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-26', receivedDate: null, reminderSent: false, reminderSentDate: null },
+        { id: 13, docType: 'priedas', contractNo: 'SUT006101', contractDate: '2025-09-28', annexNo: 'PR07985', annexDate: '2025-09-28', client: 'UAB "Agro"', email: 'info@agro.lt', manager: 'IPLA', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-09-28', receivedDate: null, reminderSent: false, reminderSentDate: null },
         // Signed (will be filtered out)
-        { id: 5, docType: 'sutartis', contractNo: 'SUT006001', contractDate: '2025-09-28', client: 'Andrius Poškienė', email: 'andrius.p@email.com', manager: 'AJUO', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-28', receivedDate: '2025-09-30', reminderSent: false },
-        { id: 8, docType: 'sutartis', contractNo: 'SUT006026', contractDate: '2025-09-29', client: 'Jonas Kurtinaitis', email: 'jonas.k@email.com', manager: 'MKAZ', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-29', receivedDate: '2025-10-01', reminderSent: false },
-        { id: 3, docType: 'priedas', contractNo: 'SUT005981', contractDate: '2025-09-22', annexNo: 'PR08245', annexDate: '2025-09-25', client: 'Ramunės Jankienės ūkis', email: 'ramune.j@email.com', manager: 'AKRU', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-25', receivedDate: '2025-09-28', reminderSent: false },
-        { id: 7, docType: 'priedas', contractNo: 'SUT006010', contractDate: '2025-08-30', annexNo: 'PR07368', annexDate: '2025-09-01', client: 'Artūras Zobov', email: 'arturas.z@email.com', manager: 'DKER', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-01', receivedDate: '2025-09-05', reminderSent: false },
+        { id: 5, docType: 'sutartis', contractNo: 'SUT006001', contractDate: '2025-09-28', client: 'Andrius Poškienė', email: 'andrius.p@email.com', manager: 'AJUO', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-28', receivedDate: '2025-09-30', reminderSent: false, reminderSentDate: null },
+        { id: 8, docType: 'sutartis', contractNo: 'SUT006026', contractDate: '2025-09-29', client: 'Jonas Kurtinaitis', email: 'jonas.k@email.com', manager: 'MKAZ', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-29', receivedDate: '2025-10-01', reminderSent: false, reminderSentDate: null },
+        { id: 3, docType: 'priedas', contractNo: 'SUT005981', contractDate: '2025-09-22', annexNo: 'PR08245', annexDate: '2025-09-25', client: 'Ramunės Jankienės ūkis', email: 'ramune.j@email.com', manager: 'AKRU', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-25', receivedDate: '2025-09-28', reminderSent: false, reminderSentDate: null },
+        { id: 7, docType: 'priedas', contractNo: 'SUT006010', contractDate: '2025-08-30', annexNo: 'PR07368', annexDate: '2025-09-01', client: 'Artūras Zobov', email: 'arturas.z@email.com', manager: 'DKER', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-01', receivedDate: '2025-09-05', reminderSent: false, reminderSentDate: null },
     ];
     
     const unsignedData = allMockData.filter(d => d.status === 'nepasirašyta');
@@ -258,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.innerHTML = ''; 
 
         if (data.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="12" class="text-center py-10 text-gray-500">Pagal nurodytus filtrus duomenų nerasta.</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="13" class="text-center py-10 text-gray-500">Pagal nurodytus filtrus duomenų nerasta.</td></tr>`;
             return;
         }
 
@@ -290,6 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td class="px-2 py-4">${item.sentDate}</td>
                     <td class="px-2 py-4 font-semibold ${isOverdue ? 'text-red-600' : ''}">${daysSinceSent || 'N/A'}</td>
                     <td class="px-2 py-4">${reminderStatus}</td>
+                    <td class="px-2 py-4">${item.reminderSentDate || '---'}</td>
                     <td class="px-2 py-4 text-center">${actionButton}</td>
                 </tr>
             `;
@@ -333,7 +335,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'Tipas': item.type,
             'Išsiuntimo data': item.sentDate,
             'Dienos po išsiuntimo': getDaysSince(item.sentDate) || 0,
-            'Priminimas': item.reminderSent ? 'Išsiųstas' : 'Neišsiųstas'
+            'Priminimas': item.reminderSent ? 'Išsiųstas' : 'Neišsiųstas',
+            'Priminimo data': item.reminderSentDate || ''
         }));
         const worksheet = XLSX.utils.json_to_sheet(dataToExport);
         const workbook = XLSX.utils.book_new();
@@ -400,6 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const itemInAllData = allMockData.find(d => d.id === currentItemId);
             if (itemInAllData) { // We update the main source of truth
                  itemInAllData.reminderSent = true;
+                 itemInAllData.reminderSentDate = new Date().toISOString().slice(0, 10);
             }
             
             console.log('Sending reminder for item ID:', currentItemId, 'to:', email, 'CC:', cc);

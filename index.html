@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sutarčių Valdymo Ataskaita</title>
+    <title>Nepasirašytų Sutarčių Ataskaita</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,44 +21,28 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
+        .filter-btn-active {
+            background-color: #334155 !important; /* bg-slate-700 */
+            color: white !important;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
-    <div class="flex h-screen">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-slate-800 text-white flex flex-col">
-            <div class="p-6 text-2xl font-bold border-b border-slate-700" style="background-color: #bfa66a; color: #333;">
+    <div class="flex flex-col h-screen">
+        <header class="bg-slate-800 text-white shadow-md">
+             <div class="p-4 text-2xl font-bold text-center" style="background-color: #bfa66a; color: #333;">
                 BALTIJOS JAVAI
             </div>
-            <nav id="sidebar-nav" class="flex-1 p-4 space-y-2">
-                <a href="#" data-filter="visi" class="flex items-center px-4 py-2 text-lg font-semibold rounded-lg bg-slate-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                    Visi
-                </a>
-                <a href="#" data-filter="sutartis" class="flex items-center px-4 py-2 text-lg rounded-lg hover:bg-slate-700 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    Sutartys
-                </a>
-                <a href="#" data-filter="priedas" class="flex items-center px-4 py-2 text-lg rounded-lg hover:bg-slate-700 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                    </svg>
-                    Priedai
-                </a>
-            </nav>
-        </aside>
+        </header>
 
         <!-- Main Content -->
         <main class="flex-1 p-8 overflow-y-auto">
-            <header class="mb-8">
-                <h1 class="text-4xl font-bold text-gray-800">Sutarčių būsenos ataskaita</h1>
-                <p class="text-gray-500 mt-1">Apžvalga ir nepasirašytų dokumentų stebėsena</p>
+            <header class="mb-8 text-center">
+                <h1 class="text-4xl font-bold text-gray-800">Nepasirašytų sutarčių ir priedų ataskaita</h1>
             </header>
 
             <!-- Stats Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-4xl mx-auto">
                 <div class="bg-white p-6 rounded-xl shadow-md flex items-center highlight-card">
                     <div class="bg-blue-100 p-3 rounded-full mr-4">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
@@ -86,53 +70,41 @@
                         <p id="overdue-docs" class="text-3xl font-bold text-red-600">0</p>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-md flex items-center highlight-card">
-                    <div class="bg-yellow-100 p-3 rounded-full mr-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                    </div>
-                    <div>
-                        <p class="text-gray-500 text-sm">Gauta per 7 d.</p>
-                        <p id="received-7-days" class="text-3xl font-bold text-gray-800">0</p>
-                    </div>
-                </div>
             </div>
-
-            <!-- Filters -->
-            <div class="bg-white p-4 rounded-xl shadow-md mb-8 flex flex-col md:flex-row items-center gap-4">
-                <div class="w-full md:w-1/4">
-                    <label for="date-filter" class="block text-sm font-medium text-gray-700">Filtruoti pagal datą</label>
-                    <input type="date" id="date-filter" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            
+            <!-- Main Filters -->
+            <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+                 <!-- Document Type Filters -->
+                <div id="doc-type-filters" class="flex justify-center items-center gap-4 mb-6 border-b pb-6">
+                    <button data-filter="visi" class="filter-btn-active px-6 py-2 rounded-lg font-semibold text-gray-600 bg-gray-200 hover:bg-gray-300 transition-colors">Visi</button>
+                    <button data-filter="sutartis" class="px-6 py-2 rounded-lg font-semibold text-gray-600 bg-gray-200 hover:bg-gray-300 transition-colors">Sutartys</button>
+                    <button data-filter="priedas" class="px-6 py-2 rounded-lg font-semibold text-gray-600 bg-gray-200 hover:bg-gray-300 transition-colors">Priedai</button>
                 </div>
-                <div class="w-full md:w-1/4">
-                    <label for="type-filter" class="block text-sm font-medium text-gray-700">Sutarties tipas</label>
-                    <select id="type-filter" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        <option value="visi">Visi tipai</option>
-                        <option value="pirkimo">Pirkimo</option>
-                        <option value="pardavimo">Pardavimo</option>
-                    </select>
-                </div>
-                <div class="w-full md:w-1/4">
-                    <label for="status-filter" class="block text-sm font-medium text-gray-700">Statusas</label>
-                    <select id="status-filter" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        <option value="visi">Visi statusai</option>
-                        <option value="nepasirašyta">Nepasirašyta</option>
-                        <option value="pasirašyta">Pasirašyta</option>
-                    </select>
-                </div>
-                 <div class="w-full md:w-1/4 flex items-end">
-                    <button id="reset-filters" class="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
-                        Išvalyti filtrus
-                    </button>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4">
+                    <div class="w-full md:w-1/3">
+                        <label for="type-filter" class="block text-sm font-medium text-gray-700">Sutarties tipas</label>
+                        <select id="type-filter" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <option value="visi">Visi tipai</option>
+                            <option value="pirkimo">Pirkimo</option>
+                            <option value="pardavimo">Pardavimo</option>
+                        </select>
+                    </div>
+                     <div class="w-full md:w-1/3 flex items-end">
+                        <button id="reset-filters" class="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+                            Išvalyti filtrus
+                        </button>
+                    </div>
                 </div>
             </div>
 
             <!-- Combined Table -->
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">Sutarčių ir priedų registras</h2>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Nepasirašytų dokumentų registras</h2>
             <div class="bg-white rounded-xl shadow-md overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-500">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
+                                <th scope="col" class="px-6 py-3">Dokumento Tipas</th>
                                 <th scope="col" class="px-6 py-3">Sutarties Nr.</th>
                                 <th scope="col" class="px-6 py-3">Priedo Nr.</th>
                                 <th scope="col" class="px-6 py-3">Klientas</th>
@@ -140,9 +112,7 @@
                                 <th scope="col" class="px-6 py-3">Sutarties data</th>
                                 <th scope="col" class="px-6 py-3">Priedo data</th>
                                 <th scope="col" class="px-6 py-3">Tipas</th>
-                                <th scope="col" class="px-6 py-3">Statusas</th>
                                 <th scope="col" class="px-6 py-3">Išsiuntimo data</th>
-                                <th scope="col" class="px-6 py-3">Gavimo data</th>
                                 <th scope="col" class="px-6 py-3">Dienos po išsiuntimo</th>
                             </tr>
                         </thead>
@@ -160,33 +130,32 @@
 document.addEventListener('DOMContentLoaded', () => {
     const today = new Date();
 
-    // Mock data with added docType and manager for filtering
-    const mockContracts = [
+    // Mock data - now we can include both signed and unsigned, the script will filter
+    const allMockData = [
+        // Unsigned
         { id: 1, docType: 'sutartis', contractNo: 'SUT005979', contractDate: '2025-09-27', client: 'Tauras Sereika', manager: 'DKER', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-09-29', receivedDate: null },
         { id: 2, docType: 'sutartis', contractNo: 'SUT005980', contractDate: '2025-09-12', client: 'Bronius Adomavičius', manager: 'AKRU', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-15', receivedDate: null },
-        { id: 5, docType: 'sutartis', contractNo: 'SUT006001', contractDate: '2025-09-28', client: 'Andrius Poškienė', manager: 'AJUO', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-28', receivedDate: '2025-09-30' },
-        { id: 8, docType: 'sutartis', contractNo: 'SUT006026', contractDate: '2025-09-29', client: 'Jonas Kurtinaitis', manager: 'MKAZ', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-29', receivedDate: '2025-10-01' },
         { id: 10, docType: 'sutartis', contractNo: 'SUT006037', contractDate: '2025-08-09', client: 'Vidmantas Martinaitis', manager: 'IPLA', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-08-10', receivedDate: null },
         { id: 11, docType: 'sutartis', contractNo: 'SUT006047', contractDate: '2025-09-22', client: 'Tomas Balsevičius', manager: 'DKER', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-24', receivedDate: null },
-    ];
-    const mockAnnexes = [
-        { id: 3, docType: 'priedas', contractNo: 'SUT005981', contractDate: '2025-09-22', annexNo: 'PR08245', annexDate: '2025-09-25', client: 'Ramunės Jankienės ūkis', manager: 'AKRU', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-25', receivedDate: '2025-09-28' },
         { id: 4, docType: 'priedas', contractNo: 'SUT005981', contractDate: '2025-09-22', annexNo: 'PR08246', annexDate: '2025-09-25', client: 'Ramunės Jankienės ūkis', manager: 'AKRU', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-25', receivedDate: null },
         { id: 6, docType: 'priedas', contractNo: 'SUT006002', contractDate: '2025-09-18', annexNo: 'PR07271', annexDate: '2025-09-20', client: 'Edvinas Poškus, ūkis', manager: 'AJUO', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-20', receivedDate: null },
-        { id: 7, docType: 'priedas', contractNo: 'SUT006010', contractDate: '2025-08-30', annexNo: 'PR07368', annexDate: '2025-09-01', client: 'Artūras Zobov', manager: 'DKER', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-01', receivedDate: '2025-09-05' },
         { id: 9, docType: 'priedas', contractNo: 'SUT006027', contractDate: '2025-09-25', annexNo: 'PR07343', annexDate: '2025-09-26', client: 'Bronius Adomavičius', manager: 'MKAZ', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-26', receivedDate: null },
-        { id: 12, docType: 'priedas', contractNo: 'SUT006052', contractDate: '2025-09-28', annexNo: 'PR08255', annexDate: '2025-09-29', client: 'Rimanto Butevičiaus ūkis', manager: 'AJUO', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-29', receivedDate: '2025-10-01' },
         { id: 13, docType: 'priedas', contractNo: 'SUT006101', contractDate: '2025-09-28', annexNo: 'PR07985', annexDate: '2025-09-28', client: 'UAB "Agro"', manager: 'IPLA', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-09-28', receivedDate: null },
+        // Signed (will be filtered out)
+        { id: 5, docType: 'sutartis', contractNo: 'SUT006001', contractDate: '2025-09-28', client: 'Andrius Poškienė', manager: 'AJUO', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-28', receivedDate: '2025-09-30' },
+        { id: 8, docType: 'sutartis', contractNo: 'SUT006026', contractDate: '2025-09-29', client: 'Jonas Kurtinaitis', manager: 'MKAZ', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-29', receivedDate: '2025-10-01' },
+        { id: 3, docType: 'priedas', contractNo: 'SUT005981', contractDate: '2025-09-22', annexNo: 'PR08245', annexDate: '2025-09-25', client: 'Ramunės Jankienės ūkis', manager: 'AKRU', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-25', receivedDate: '2025-09-28' },
+        { id: 7, docType: 'priedas', contractNo: 'SUT006010', contractDate: '2025-08-30', annexNo: 'PR07368', annexDate: '2025-09-01', client: 'Artūras Zobov', manager: 'DKER', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-01', receivedDate: '2025-09-05' },
     ];
-    const combinedData = [...mockContracts, ...mockAnnexes];
-
-    const dateFilter = document.getElementById('date-filter');
-    const typeFilter = document.getElementById('type-filter');
-    const statusFilter = document.getElementById('status-filter');
-    const resetBtn = document.getElementById('reset-filters');
-    const sidebarNav = document.getElementById('sidebar-nav');
     
-    let activeSidebarFilter = 'visi';
+    // The main dataset for this report is only the unsigned documents
+    const unsignedData = allMockData.filter(d => d.status === 'nepasirašyta');
+
+    const typeFilter = document.getElementById('type-filter');
+    const resetBtn = document.getElementById('reset-filters');
+    const docTypeFilters = document.getElementById('doc-type-filters');
+    
+    let activeDocTypeFilter = 'visi';
 
     function getDaysSince(dateString) {
         if (!dateString) return null;
@@ -196,17 +165,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function renderDashboard(data) {
-        // --- Render stats (always calculated on the full dataset) ---
-        const unsignedContracts = combinedData.filter(d => d.docType === 'sutartis' && d.status === 'nepasirašyta').length;
-        const unsignedAnnexes = combinedData.filter(d => d.docType === 'priedas' && d.status === 'nepasirašyta').length;
-        
-        const overdueDocs = combinedData.filter(d => d.status === 'nepasirašyta' && getDaysSince(d.sentDate) > 5).length;
-        const received7Days = combinedData.filter(d => d.status === 'pasirašyta' && getDaysSince(d.receivedDate) <= 7).length;
+        // --- Render stats (always calculated on the full unsigned dataset) ---
+        const unsignedContracts = unsignedData.filter(d => d.docType === 'sutartis').length;
+        const unsignedAnnexes = unsignedData.filter(d => d.docType === 'priedas').length;
+        const overdueDocs = unsignedData.filter(d => getDaysSince(d.sentDate) > 5).length;
 
         document.getElementById('unsigned-contracts').textContent = unsignedContracts;
         document.getElementById('unsigned-annexes').textContent = unsignedAnnexes;
         document.getElementById('overdue-docs').textContent = overdueDocs;
-        document.getElementById('received-7-days').textContent = received7Days;
 
         // --- Render table with filtered data ---
         renderTable('combined-table', data);
@@ -217,16 +183,19 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.innerHTML = ''; 
 
         if (data.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="11" class="text-center py-10 text-gray-500">Pagal nurodytus filtrus duomenų nerasta.</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="10" class="text-center py-10 text-gray-500">Pagal nurodytus filtrus duomenų nerasta.</td></tr>`;
             return;
         }
 
         data.forEach(item => {
             const daysSinceSent = getDaysSince(item.sentDate);
-            const isOverdue = item.status === 'nepasirašyta' && daysSinceSent > 5;
+            const isOverdue = daysSinceSent > 5;
+            
+            const docTypeDisplay = item.docType.charAt(0).toUpperCase() + item.docType.slice(1);
 
             const row = `
                 <tr class="bg-white border-b ${isOverdue ? 'bg-red-50' : ''}">
+                    <td class="px-6 py-4 font-semibold">${docTypeDisplay}</td>
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">${item.contractNo}</th>
                     <td class="px-6 py-4">${item.annexNo || '---'}</td>
                     <td class="px-6 py-4">${item.client}</td>
@@ -234,13 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td class="px-6 py-4">${item.contractDate || '---'}</td>
                     <td class="px-6 py-4">${item.annexDate || '---'}</td>
                     <td class="px-6 py-4 capitalize">${item.type}</td>
-                    <td class="px-6 py-4">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            item.status === 'pasirašyta' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                        }">${item.status}</span>
-                    </td>
                     <td class="px-6 py-4">${item.sentDate}</td>
-                    <td class="px-6 py-4">${item.receivedDate || '---'}</td>
                     <td class="px-6 py-4 font-semibold ${isOverdue ? 'text-red-600' : ''}">${daysSinceSent || 'N/A'}</td>
                 </tr>
             `;
@@ -249,64 +212,49 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function applyFilters() {
-        let filteredData = combinedData;
+        let filteredData = unsignedData;
 
-        // 1. Sidebar filter
-        if (activeSidebarFilter !== 'visi') {
-            filteredData = filteredData.filter(d => d.docType === activeSidebarFilter);
+        // 1. Document Type button filter
+        if (activeDocTypeFilter !== 'visi') {
+            filteredData = filteredData.filter(d => d.docType === activeDocTypeFilter);
         }
 
-        // 2. Top bar filters
-        const selectedDate = dateFilter.value;
-        if (selectedDate) {
-            filteredData = filteredData.filter(d => d.receivedDate === selectedDate || d.sentDate === selectedDate || d.contractDate === selectedDate || d.annexDate === selectedDate);
-        }
-        
+        // 2. Sutarties Tipas filter
         const selectedType = typeFilter.value;
         if (selectedType !== 'visi') {
             filteredData = filteredData.filter(d => d.type === selectedType);
         }
         
-        const selectedStatus = statusFilter.value;
-        if (selectedStatus !== 'visi') {
-            filteredData = filteredData.filter(d => d.status === selectedStatus);
-        }
-
         renderDashboard(filteredData);
     }
 
-    // Event listeners for top filters
-    [dateFilter, typeFilter, statusFilter].forEach(el => el.addEventListener('change', applyFilters));
+    // Event listeners for filters
+    typeFilter.addEventListener('change', applyFilters);
     
-    // Event listener for sidebar
-    sidebarNav.addEventListener('click', (e) => {
-        const link = e.target.closest('a');
-        if (!link) return;
-        e.preventDefault();
+    // Event listener for doc type buttons
+    docTypeFilters.addEventListener('click', (e) => {
+        const button = e.target.closest('button');
+        if (!button) return;
 
-        const filterValue = link.dataset.filter;
+        const filterValue = button.dataset.filter;
         if (filterValue) {
-            activeSidebarFilter = filterValue;
+            activeDocTypeFilter = filterValue;
 
-            // Update active state in sidebar
-            sidebarNav.querySelectorAll('a').forEach(a => {
-                a.classList.remove('bg-slate-700', 'font-semibold');
+            docTypeFilters.querySelectorAll('button').forEach(btn => {
+                btn.classList.remove('filter-btn-active');
             });
-            link.classList.add('bg-slate-700', 'font-semibold');
+            button.classList.add('filter-btn-active');
             
             applyFilters();
         }
     });
 
     resetBtn.addEventListener('click', () => {
-        dateFilter.value = '';
         typeFilter.value = 'visi';
-        statusFilter.value = 'visi';
         
-        // Reset sidebar filter to 'visi'
-        activeSidebarFilter = 'visi';
-        sidebarNav.querySelectorAll('a').forEach(a => a.classList.remove('bg-slate-700', 'font-semibold'));
-        sidebarNav.querySelector('a[data-filter="visi"]').classList.add('bg-slate-700', 'font-semibold');
+        activeDocTypeFilter = 'visi';
+        docTypeFilters.querySelectorAll('button').forEach(btn => btn.classList.remove('filter-btn-active'));
+        docTypeFilters.querySelector('button[data-filter="visi"]').classList.add('filter-btn-active');
 
         applyFilters();
     });

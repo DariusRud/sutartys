@@ -36,82 +36,82 @@
 <body class="bg-gray-100">
     <div class="flex flex-col h-screen">
         <header class="bg-slate-800 text-white shadow-md">
-             <div class="p-4 text-2xl font-bold text-center" style="background-color: #bfa66a; color: #333;">
+             <div class="p-1 text-lg font-bold text-center" style="background-color: #bfa66a; color: #333;">
                 BALTIJOS JAVAI
             </div>
         </header>
 
         <!-- Main Content -->
-        <main class="flex-1 p-8 overflow-y-auto">
+        <main class="flex-1 p-4 md:p-6 overflow-y-auto">
             <div class="max-w-7xl mx-auto">
-                <header class="mb-8 text-center">
-                    <h1 class="text-3xl font-bold text-gray-800">Nepasirašytų sutarčių ir priedų ataskaita</h1>
+                <header class="mb-4 text-center">
+                    <h1 class="text-xl font-bold text-gray-800">Nepasirašytų sutarčių ir priedų ataskaita</h1>
                 </header>
 
                 <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-4xl mx-auto">
-                    <div class="bg-white p-6 rounded-xl shadow-md flex items-center highlight-card">
-                        <div class="bg-blue-100 p-3 rounded-full mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 max-w-4xl mx-auto">
+                    <div class="bg-white p-3 rounded-xl shadow-md flex items-center justify-between highlight-card">
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                            </div>
+                            <p class="text-gray-500 text-xs">Nepasirašytų sutarčių</p>
                         </div>
-                        <div>
-                            <p class="text-gray-500 text-sm">Nepasirašytų sutarčių</p>
-                            <p id="unsigned-contracts" class="text-3xl font-bold text-gray-800">0</p>
-                        </div>
+                        <p id="unsigned-contracts" class="text-2xl font-bold text-gray-800">0</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md flex items-center highlight-card">
-                        <div class="bg-green-100 p-3 rounded-full mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                    <div class="bg-white p-3 rounded-xl shadow-md flex items-center justify-between highlight-card">
+                         <div class="flex items-center">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                            </div>
+                            <p class="text-gray-500 text-xs">Nepasirašytų priedų</p>
                         </div>
-                        <div>
-                            <p class="text-gray-500 text-sm">Nepasirašytų priedų</p>
-                            <p id="unsigned-annexes" class="text-3xl font-bold text-gray-800">0</p>
-                        </div>
+                        <p id="unsigned-annexes" class="text-2xl font-bold text-gray-800">0</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md flex items-center highlight-card">
-                        <div class="bg-red-100 p-3 rounded-full mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <div class="bg-white p-3 rounded-xl shadow-md flex items-center justify-between highlight-card">
+                        <div class="flex items-center">
+                            <div class="bg-red-100 p-2 rounded-full mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </div>
+                            <p class="text-gray-500 text-xs">Vėluojantys (>5 d.)</p>
                         </div>
-                        <div>
-                            <p class="text-gray-500 text-sm">Vėluojantys (>5 d.)</p>
-                            <p id="overdue-docs" class="text-3xl font-bold text-red-600">0</p>
-                        </div>
+                        <p id="overdue-docs" class="text-2xl font-bold text-red-600">0</p>
                     </div>
                 </div>
                 
                 <!-- Main Filters -->
-                <div id="sticky-filters" class="bg-white p-6 rounded-xl shadow-md mb-8 sticky top-0 z-20">
+                <div id="sticky-filters" class="bg-white p-4 rounded-xl shadow-md mb-4 sticky top-0 z-20">
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                         <div>
-                            <label for="doc-type-filter" class="block text-sm font-medium text-gray-700">Dokumento tipas</label>
-                            <select id="doc-type-filter" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <label for="doc-type-filter" class="block text-xs font-medium text-gray-700">Dokumento tipas</label>
+                            <select id="doc-type-filter" class="mt-1 block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 <option value="visi">Visi</option>
                                 <option value="sutartis">Sutartis</option>
                                 <option value="priedas">Priedas</option>
                             </select>
                         </div>
                         <div>
-                            <label for="manager-filter" class="block text-sm font-medium text-gray-700">Menedžeris</label>
-                            <select id="manager-filter" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <label for="manager-filter" class="block text-xs font-medium text-gray-700">Menedžeris</label>
+                            <select id="manager-filter" class="mt-1 block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 <option value="visi">Visi menedžeriai</option>
                             </select>
                         </div>
                         <div>
-                            <label for="type-filter" class="block text-sm font-medium text-gray-700">Sutarties tipas</label>
-                            <select id="type-filter" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <label for="type-filter" class="block text-xs font-medium text-gray-700">Sutarties tipas</label>
+                            <select id="type-filter" class="mt-1 block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 <option value="visi">Visi tipai</option>
                                 <option value="pirkimo">Pirkimo</option>
                                 <option value="pardavimo">Pardavimo</option>
                             </select>
                         </div>
                          <div class="flex items-end">
-                            <button id="reset-filters" class="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
-                                Išvalyti filtrus
+                            <button id="reset-filters" class="w-full bg-gray-600 text-white py-2 px-3 text-sm rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+                                Išvalyti
                             </button>
                         </div>
                         <div class="flex items-end">
-                           <button id="export-btn" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors flex items-center justify-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                           <button id="export-btn" class="w-full bg-green-600 text-white py-2 px-3 text-sm rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors flex items-center justify-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                   <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg>
                                 Eksportuoti
@@ -122,7 +122,7 @@
 
                 <!-- Combined Table -->
                 <div class="bg-white rounded-xl shadow-md">
-                    <div class="overflow-auto" style="max-height: calc(100vh - 450px);">
+                    <div class="overflow-auto" style="max-height: calc(100vh - 280px);">
                         <table class="w-full text-xs text-left text-gray-500">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr id="table-header">

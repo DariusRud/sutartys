@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sutarčių Valdymo Ataskaita</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .highlight-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .highlight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-slate-800 text-white flex flex-col">
+            <div class="p-6 text-2xl font-bold border-b border-slate-700" style="background-color: #bfa66a; color: #333;">
+                BALTIJOS JAVAI
+            </div>
+            <nav class="flex-1 p-4 space-y-2">
+                <a href="#" class="flex items-center px-4 py-2 text-lg font-semibold rounded-lg bg-slate-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2a4 4 0 004 4h2a4 4 0 004-4zm10 0v-2a4 4 0 00-4-4h-2a4 4 0 00-4 4v2a4 4 0 004 4h2a4 4 0 004-4zM9 7a4 4 0 014-4h2a4 4 0 014 4v2a4 4 0 01-4 4h-2a4 4 0 01-4-4V7z" /></svg>
+                    Ataskaita
+                </a>
+                <a href="#" class="flex items-center px-4 py-2 text-lg rounded-lg hover:bg-slate-700 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18M9 4v16M15 4v16" /></svg>
+                    Pardavimo sutartys
+                </a>
+                <a href="#" class="flex items-center px-4 py-2 text-lg rounded-lg hover:bg-slate-700 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    Pirkimo sutartys
+                </a>
+                <a href="#" class="flex items-center px-4 py-2 text-lg rounded-lg text-yellow-400 hover:bg-slate-700 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Nepasirašyta
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8 overflow-y-auto">
+            <header class="mb-8">
+                <h1 class="text-4xl font-bold text-gray-800">Sutarčių būsenos ataskaita</h1>
+                <p class="text-gray-500 mt-1">Apžvalga ir nepasirašytų dokumentų stebėsena</p>
+            </header>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center highlight-card">
+                    <div class="bg-blue-100 p-3 rounded-full mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Nepasirašytų sutarčių</p>
+                        <p id="unsigned-contracts" class="text-3xl font-bold text-gray-800">0</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center highlight-card">
+                    <div class="bg-green-100 p-3 rounded-full mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Nepasirašytų priedų</p>
+                        <p id="unsigned-annexes" class="text-3xl font-bold text-gray-800">0</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center highlight-card">
+                    <div class="bg-red-100 p-3 rounded-full mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Vėluojantys (>5 d.)</p>
+                        <p id="overdue-docs" class="text-3xl font-bold text-red-600">0</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center highlight-card">
+                    <div class="bg-yellow-100 p-3 rounded-full mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Gauta per 7 d.</p>
+                        <p id="received-7-days" class="text-3xl font-bold text-gray-800">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="bg-white p-4 rounded-xl shadow-md mb-8 flex flex-col md:flex-row items-center gap-4">
+                <div class="w-full md:w-1/3">
+                    <label for="date-filter" class="block text-sm font-medium text-gray-700">Gavimo data</label>
+                    <input type="date" id="date-filter" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                </div>
+                <div class="w-full md:w-1/3">
+                    <label for="type-filter" class="block text-sm font-medium text-gray-700">Sutarties tipas</label>
+                    <select id="type-filter" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <option value="visi">Visi tipai</option>
+                        <option value="pirkimo">Pirkimo</option>
+                        <option value="pardavimo">Pardavimo</option>
+                    </select>
+                </div>
+                 <div class="w-full md:w-1/3 flex items-end">
+                    <button id="reset-filters" class="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+                        Išvalyti filtrus
+                    </button>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">Sutarties Nr.</th>
+                                <th scope="col" class="px-6 py-3">Priedo Nr.</th>
+                                <th scope="col" class="px-6 py-3">Klientas</th>
+                                <th scope="col" class="px-6 py-3">Tipas</th>
+                                <th scope="col" class="px-6 py-3">Statusas</th>
+                                <th scope="col" class="px-6 py-3">Išsiuntimo data</th>
+                                <th scope="col" class="px-6 py-3">Gavimo data</th>
+                                <th scope="col" class="px-6 py-3">Dienos po išsiuntimo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contracts-table">
+                            <!-- Rows will be injected by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Mock data representing data exported from Rivilė
+    const today = new Date();
+    const mockData = [
+        { id: 1, contractNo: 'SUT005979', annexNo: null, client: 'Tauras Sereika', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-09-29', receivedDate: null },
+        { id: 2, contractNo: 'SUT005980', annexNo: null, client: 'Bronius Adomavičius', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-15', receivedDate: null },
+        { id: 3, contractNo: 'SUT005981', annexNo: 1, client: 'Ramunės Jankienės ūkis', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-25', receivedDate: '2025-09-28' },
+        { id: 4, contractNo: 'SUT005981', annexNo: 2, client: 'Ramunės Jankienės ūkis', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-25', receivedDate: null },
+        { id: 5, contractNo: 'SUT006001', annexNo: null, client: 'Andrius Poškienė', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-28', receivedDate: '2025-09-30' },
+        { id: 6, contractNo: 'SUT006002', annexNo: 1, client: 'Edvinas Poškus, ūkis', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-20', receivedDate: null },
+        { id: 7, contractNo: 'SUT006010', annexNo: 1, client: 'Artūras Zobov', type: 'pardavimo', status: 'pasirašyta', sentDate: '2025-09-01', receivedDate: '2025-09-05' },
+        { id: 8, contractNo: 'SUT006026', annexNo: null, client: 'Jonas Kurtinaitis', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-29', receivedDate: '2025-10-01' },
+        { id: 9, contractNo: 'SUT006027', annexNo: 1, client: 'Bronius Adomavičius', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-26', receivedDate: null },
+        { id: 10, contractNo: 'SUT006037', annexNo: null, client: 'Vidmantas Martinaitis', type: 'pardavimo', status: 'nepasirašyta', sentDate: '2025-08-10', receivedDate: null },
+        { id: 11, contractNo: 'SUT006047', annexNo: null, client: 'Tomas Balsevičius', type: 'pirkimo', status: 'nepasirašyta', sentDate: '2025-09-24', receivedDate: null },
+        { id: 12, contractNo: 'SUT006052', annexNo: 1, client: 'Rimanto Butevičiaus ūkis', type: 'pirkimo', status: 'pasirašyta', sentDate: '2025-09-29', receivedDate: '2025-10-01' },
+    ];
+
+    const dateFilter = document.getElementById('date-filter');
+    const typeFilter = document.getElementById('type-filter');
+    const resetBtn = document.getElementById('reset-filters');
+
+    function getDaysSince(dateString) {
+        if (!dateString) return null;
+        const sentDate = new Date(dateString);
+        const diffTime = Math.abs(today - sentDate);
+        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    }
+    
+    function renderDashboard(data) {
+        // Render stats
+        const unsignedContracts = data.filter(d => d.status === 'nepasirašyta' && d.annexNo === null).length;
+        const unsignedAnnexes = data.filter(d => d.status === 'nepasirašyta' && d.annexNo !== null).length;
+        
+        const overdueDocs = data.filter(d => {
+            const days = getDaysSince(d.sentDate);
+            return d.status === 'nepasirašyta' && days > 5;
+        }).length;
+
+        const received7Days = data.filter(d => {
+            const daysSinceReceived = getDaysSince(d.receivedDate);
+            return d.status === 'pasirašyta' && daysSinceReceived !== null && daysSinceReceived <= 7;
+        }).length;
+
+        document.getElementById('unsigned-contracts').textContent = unsignedContracts;
+        document.getElementById('unsigned-annexes').textContent = unsignedAnnexes;
+        document.getElementById('overdue-docs').textContent = overdueDocs;
+        document.getElementById('received-7-days').textContent = received7Days;
+
+        // Render table
+        const tableBody = document.getElementById('contracts-table');
+        tableBody.innerHTML = ''; // Clear existing rows
+
+        if (data.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-gray-500">Pagal nurodytus filtrus duomenų nerasta.</td></tr>`;
+            return;
+        }
+
+        data.forEach(item => {
+            const daysSinceSent = getDaysSince(item.sentDate);
+            const isOverdue = item.status === 'nepasirašyta' && daysSinceSent > 5;
+
+            const row = `
+                <tr class="bg-white border-b ${isOverdue ? 'bg-red-50' : ''}">
+                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">${item.contractNo}</td>
+                    <td class="px-6 py-4">${item.annexNo || 'N/A'}</td>
+                    <td class="px-6 py-4">${item.client}</td>
+                    <td class="px-6 py-4 capitalize">${item.type}</td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            item.status === 'pasirašyta' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                        }">
+                            ${item.status}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">${item.sentDate}</td>
+                    <td class="px-6 py-4">${item.receivedDate || '---'}</td>
+                    <td class="px-6 py-4 font-semibold ${isOverdue ? 'text-red-600' : ''}">${daysSinceSent || 'N/A'}</td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+        });
+    }
+
+    function applyFilters() {
+        const selectedDate = dateFilter.value;
+        const selectedType = typeFilter.value;
+
+        let filteredData = mockData;
+
+        if (selectedDate) {
+            filteredData = filteredData.filter(d => d.receivedDate === selectedDate || d.sentDate === selectedDate);
+        }
+
+        if (selectedType !== 'visi') {
+            filteredData = filteredData.filter(d => d.type === selectedType);
+        }
+
+        renderDashboard(filteredData);
+    }
+
+    dateFilter.addEventListener('change', applyFilters);
+    typeFilter.addEventListener('change', applyFilters);
+    resetBtn.addEventListener('click', () => {
+        dateFilter.value = '';
+        typeFilter.value = 'visi';
+        renderDashboard(mockData);
+    });
+
+    // Initial render
+    renderDashboard(mockData);
+});
+</script>
+</body>
+</html>
